@@ -3,6 +3,8 @@ package com.lyhteixeirah.dsvendas.controllers;
 import java.util.List;
 
 import com.lyhteixeirah.dsvendas.dto.SaleDTO;
+import com.lyhteixeirah.dsvendas.dto.SaleSuccessDTO;
+import com.lyhteixeirah.dsvendas.dto.SaleSumDTO;
 import com.lyhteixeirah.dsvendas.services.SaleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,20 @@ public class SaleController {
     private SaleService service;
     
     @GetMapping
-    public  ResponseEntity<Page<SaleDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<SaleDTO>> findAll(Pageable pageable) {
         Page<SaleDTO> list = service.findAll(pageable);
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping(value = "/sum-by-seller")
+    public ResponseEntity<List<SaleSumDTO>> amountGroupedBySeller() {
+        List<SaleSumDTO> list = service.amountGroupedBySeller(); 
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping(value = "/success-by-seller")
+    public ResponseEntity<List<SaleSuccessDTO>> successGroupedBySeller() {
+        List<SaleSuccessDTO> list = service.successGroupedBySeller(); 
         return ResponseEntity.ok(list);
     }
 }

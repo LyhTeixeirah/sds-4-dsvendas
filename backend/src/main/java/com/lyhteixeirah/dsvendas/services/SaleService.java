@@ -1,6 +1,10 @@
 package com.lyhteixeirah.dsvendas.services;
 
+import java.util.List;
+
 import com.lyhteixeirah.dsvendas.dto.SaleDTO;
+import com.lyhteixeirah.dsvendas.dto.SaleSuccessDTO;
+import com.lyhteixeirah.dsvendas.dto.SaleSumDTO;
 import com.lyhteixeirah.dsvendas.entities.Sale;
 import com.lyhteixeirah.dsvendas.repositories.SaleRepository;
 import com.lyhteixeirah.dsvendas.repositories.SellerRepository;
@@ -29,4 +33,15 @@ public class SaleService {
         Page<Sale> result = repository.findAll(pageable);
         return result.map(x -> new SaleDTO(x));
     }
+ 
+    @Transactional(readOnly = true)
+    public List<SaleSumDTO> amountGroupedBySeller(){
+         return repository.amountGroupedBySeller();
+    }
+
+    @Transactional(readOnly = true)
+    public List<SaleSuccessDTO> successGroupedBySeller(){
+         return repository.successGroupedBySeller();
+    }
+   
 }
